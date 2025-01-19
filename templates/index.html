@@ -1,0 +1,320 @@
+{% extends 'layout.html' %}
+
+{% block title %}Welcome to HouseHelp Hub{% endblock %}
+
+{% block style %}
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #1d2671, #c33764);
+        --glass-bg: rgba(255, 255, 255, 0.95);
+    }
+
+    .hero-section {
+        background: linear-gradient(rgba(29, 38, 113, 0.9), rgba(195, 55, 100, 0.9)),
+                    url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-1.2.1');
+        background-size: cover;
+        background-position: center;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        animation: fadeInUp 1s ease;
+    }
+
+    .hero-description {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        animation: fadeInUp 1s ease 0.2s;
+        opacity: 0;
+        animation-fill-mode: forwards;
+    }
+
+    .service-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 2rem;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .service-icon {
+        font-size: 3rem;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1.5rem;
+        transition: transform 0.3s ease;
+    }
+
+    .service-card:hover .service-icon {
+        transform: scale(1.2) rotate(10deg);
+    }
+
+    .features-section {
+        background: linear-gradient(135deg, rgba(29, 38, 113, 0.05), rgba(195, 55, 100, 0.05));
+        padding: 100px 0;
+    }
+
+    .feature-item {
+        text-align: center;
+        padding: 2rem;
+        transition: all 0.3s ease;
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .testimonial-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 2rem;
+        margin: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .star-rating {
+        color: #ffd700;
+        margin-bottom: 1rem;
+    }
+
+    .cta-section {
+        background: var(--primary-gradient);
+        padding: 100px 0;
+        color: white;
+        text-align: center;
+    }
+
+    .btn-custom {
+        padding: 1rem 2rem;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 2px solid white;
+        background: transparent;
+        color: white;
+    }
+
+    .btn-custom:hover {
+        background: white;
+        color: #1d2671;
+        transform: translateY(-2px);
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        .hero-description {
+            font-size: 1.2rem;
+        }
+        .service-card {
+            margin-bottom: 2rem;
+        }
+    }
+    .feature-item:hover {
+        transform: translateY(-5px);
+    }
+    
+    .feature-item:hover .feature-icon {
+        transform: scale(1.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="container hero-content text-center text-white">
+        <h1 class="hero-title">Welcome to HouseHelp Hub</h1>
+        <p class="hero-description">Your trusted platform for professional household services</p>
+        {% if 'User_id' not in session %}
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{{ url_for('login') }}" class="btn btn-custom">
+                <i class="fas fa-sign-in-alt me-2"></i>Login
+            </a>
+            <div class="dropdown">
+                <button class="btn btn-custom dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="fas fa-user-plus me-2"></i>Register
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{ url_for('custRegister') }}">As Customer</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('profRegister') }}">As Professional</a></li>
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="services-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Our Services</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="service-card">
+                    <i class="fas fa-broom service-icon"></i>
+                    <h3>House Cleaning</h3>
+                    <p>Professional cleaning services for your home</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="service-card">
+                    <i class="fas fa-wrench service-icon"></i>
+                    <h3>Repairs & Maintenance</h3>
+                    <p>Expert repair services for your household needs</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="service-card">
+                    <i class="fas fa-paint-roller service-icon"></i>
+                    <h3>Home Improvement</h3>
+                    <p>Transform your space with our skilled professionals</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features-section">
+    <div class="container">
+        <h2 class="text-center mb-5">Why Choose HouseHelp Hub?</h2>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="feature-item">
+                    <i class="fas fa-user-check feature-icon"></i>
+                    <h4>Verified Professionals</h4>
+                    <p>All service providers are thoroughly vetted</p>
+                </div>
+            </div>
+
+            <!-- Add more feature items -->
+            <div class="col-md-3">
+                <div class="feature-item">
+                    <i class="fas fa-clock feature-icon"></i>
+                    <h4>Quick Service</h4>
+                    <p>Fast response and service delivery</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-item">
+                    <i class="fas fa-money-bill-wave feature-icon"></i>
+                    <h4>Money-Back Guarantee</h4>
+                    <p>100% satisfaction or your money back</p>
+                </div>
+            </div>
+        
+            <div class="col-md-3" >
+                <div class="feature-item">
+                    <i class="fas fa-headset feature-icon"></i>
+                    <h4>24/7 Support</h4>
+                    <p>Round-the-clock customer assistance</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">What Our Customers Say</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="star-rating">★★★★★</div>
+                    <p>Excellent service! The professionals are skilled and courteous.</p>
+                    <div class="d-flex align-items-center mt-3">
+                        <img src="https://api.dicebear.com/9.x/lorelei/svg?seed=Rhuilafru" alt="Rhuilafru Mog" 
+                             class="rounded-circle me-3" style="width: 50px; height: 50px;">
+                        <div>
+                            <h5 class="mb-0">Rhuilafru Mog</h5>
+                            <small class="text-muted">House Cleaning & Decoration Service</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more testimonials -->
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="star-rating">★★★★★</div>
+                    <p>Outstanding support! They resolved my software issues quickly and efficiently.</p>
+                    <div class="d-flex align-items-center mt-3">
+                        <img src="https://api.dicebear.com/9.x/lorelei/svg?seed=Talib" alt="Talib Hussain" 
+                             class="rounded-circle me-3" style="width: 50px; height: 50px;">
+                        <div>
+                            <h5 class="mb-0">Talib Hussain </h5>
+                            <small class="text-muted">Computer Software Service</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="star-rating">★★★★★</div>
+                    <p>Top-notch service! They fixed my car in no time and explained everything clearly.</p>
+                    <div class="d-flex align-items-center mt-3">
+                        <img src="https://api.dicebear.com/9.x/lorelei/svg?seed=Amir" alt="Amir Alam" 
+                             class="rounded-circle me-3" style="width: 50px; height: 50px;">
+                        <div>
+                            <h5 class="mb-0">Amir Alam</h5>
+                            <small class="text-muted"> Car Mechanic Service</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container">
+        <h2 class="mb-4">Ready to get started?</h2>
+        <p class="lead mb-4">Join thousands of satisfied customers today!</p>
+        {% if 'User_id' not in session %}
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{{ url_for('custRegister') }}" class="btn btn-custom">Register as Customer</a>
+            <a href="{{ url_for('profRegister') }}" class="btn btn-custom">Join as Professional</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
