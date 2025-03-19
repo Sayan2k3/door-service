@@ -1,11 +1,11 @@
 from datetime import datetime
 from app import app
-# from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash
-# from flask_migrate import Migrate
+from flask_migrate import Migrate
 
-# db=SQLAlchemy(app)
-# migrate = Migrate(app, db)
+db=SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 # User - Represents all users, including Admin, Clients, and Service Providers
 class User(db.Model):
